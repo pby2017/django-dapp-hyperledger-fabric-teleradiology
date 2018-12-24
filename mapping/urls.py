@@ -1,4 +1,4 @@
-"""myMIMS URL Configuration
+"""mapping URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.1/topics/http/urls/
@@ -15,13 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.contrib.staticfiles.urls import static
 
-from django.conf import settings
-from django.conf.urls.static import static
+from mapping import views
+from mapping.views import *
 
+app_name='mapping'
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('mapping/', include('mapping.urls', namespace='mapping')),
+    path('', MedimageLV.as_view(), name='index'),
+    path('medimage/', MedimageLV.as_view(), name='medimage_list'),
+    path('before/<int:requesterID>', views.medimage_list, name='medimage_before'),
+    path('after/', AfterLV.as_view(), name='medimage_after'),
+    path('add/', PostCreateView.as_view(), name='add')
 ]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
