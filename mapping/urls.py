@@ -23,7 +23,7 @@ app_name='mapping'
 urlpatterns = [
     path('', MedimageLV.as_view(), name='index'),
     path('medimage/', MedimageLV.as_view(), name='medimage_list'),
-    path('before/<int:requesterID>', views.medimage_list, name='medimage_before'),
+    path('before/<int:requesterID>', BeforeLV.as_view(), name='medimage_before1'),
     path('after/', AfterLV.as_view(), name='medimage_after'),
     path('add/', PostCreateView.as_view(), name='add')
 ]

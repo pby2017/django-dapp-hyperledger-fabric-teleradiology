@@ -18,7 +18,6 @@ class MedimageLV(ListView):
 
 #--- ListView
 
-
 class BeforeLV(ListView):
     # model = Medimage.objects.filter(requesterID=1)
     # model = get_object_or_404(Medimage)
@@ -29,19 +28,8 @@ class BeforeLV(ListView):
     context_object_name = 'medimages'
     paginate_by = 5
 
-def medimage_list(request,requesterID):
-    print("-----------------------------")
-    print(requesterID)
-    print("-----------------------------")
-    print(request)
-    print("-----------------------------")
-
-    medimages = Medimage.objects.filter(requesterID=requesterID)
-
-    context = {}
-    context['medimages'] = medimages
-
-    return render(request, 'mapping/medimage_before.html', context)
+    def get_queryset(self, *args, **kwargs):
+        return Medimage.objects.filter(requesterID=self.kwargs['requesterID'])
 
 #--- ListView
 class AfterLV(ListView):

@@ -1,33 +1,41 @@
-<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-    crossorigin="anonymous"></script>
-<script>
-    // $(document).load(function () {
-    //     console.log("good");
-    // });
-    $(document).ready(function () {
-        function isEmpty(el) {
-            return !$.trim(el.html())
-        }
-        setInterval(function () {
-            if (!isEmpty($("#time"))) {
-                console.log($("#time"));
-            } else {
-                console.log("no");
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+    <script>
+        // $(document).load(function () {
+        //     console.log("good");
+        // });
+        $(document).ready(function () {
+            function isEmpty(el) {
+                return !$.trim(el.html())
             }
-        }, 1000);
-        
-    });
+            setInterval(function () {
+                if (!isEmpty($("#time"))) {
+                    console.log($("#time"));
+                } else {
+                    console.log("no");
+                }
+            }, 1000);
+        });
+    </script>
+</head>
 
-</script>
+<body>
+    {% for medimage in medimages %}
+    <div style="display:inline-block">
+        <div><img src="{{ medimage.dicom_jpg_file.thumb_url }}" alt="not"></div>
+        <div>{{ medimage.requesterID }}</div>
+        <div id="time">{{ medimage.request_time }}</div>
+        <div>{{ medimage.dicom_jpg_file }}</div>
+        <div>{{ medimage.progress }}</div>
+        <div>{{ medimage.patient_id }}</div>
+    </div>
 
-{% for medimage in medimages %}
-<div style="display:inline-block">
-    <div><img src="{{ medimage.dicom_jpg_file.thumb_url }}" alt="not"></div>
-    <div>{{ medimage.requesterID }}</div>
-    <div id="time">{{ medimage.request_time }}</div>
-    <div>{{ medimage.dicom_jpg_file }}</div>
-    <div>{{ medimage.progress }}</div>
-    <div>{{ medimage.patient_id }}</div>
-</div>
+    {% endfor %}
+</body>
 
-{% endfor %}
+</html>
