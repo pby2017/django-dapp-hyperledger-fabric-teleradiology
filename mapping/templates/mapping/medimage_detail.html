@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{%block title %}Medimage Detail{% endblock %}
+
+{% block content %}
+
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET", // 데이터를 전송하는 방법을 지정
+            url: "http://59.29.224.87:8000/get_tuna/{{ medimages.id }}", // 통신할 url을 지정
+            dataType: "json",
+            success: function (response) { // 통신 성공시
+                console.log(response);
+                $("#recent_opinion").text(response.opinion);
+            },
+            error: function (request, status, error) { // 통신 실패시 - 로그인 페이지 리다이렉트
+                alert("GET error test" + response)
+            },
+        });
+        $("#add_opinion").click(function () {
+            opinion = $("#input_opinion").val();
+            $.ajax({
+                // contentType: "application/json; charset=UTF-8",
+                type: "POST", // 데이터를 전송하는 방법을 지정
+                url: "http://59.29.224.87:8000/add_opinion", // 통신할 url을 지정
+                data: JSON.stringify({ 'id': '{{ medimages.id }}', 'opinion': opinion, 'csrfmiddlewaretoken': '{{ csrf_token }}' }), // 서버로 데이터 전송시 옵션
+                dataType: "json",
+                success: function (response) { // 통신 성공시
+                    console.log("success!",response);
+                    $("#recent_opinion").text(JSON.stringify(response));
+                },
+                error: function (response) {
+                    console.log("error!",response);
+                    // alert(response.responseText + response.error)
+                    // alert(Object.values(jqXHR))
+                }
+            });
+        });
+    });
+</script>
+
+<div style="background-color: aquamarine;">
+    <p>현재 소견</p>
+    <p id="recent_opinion"></p>
+</div>
+<br>
+<div style="background-color: aquamarine;" id="div_opinion">
+    <p>소견 입력</p>
+    <input type="text" id="input_opinion">
+    <input type="button" value="소견 전송" id="add_opinion">
+</div>
+<br>
+<div style="background-color: aquamarine;">
+    <img src="{{ medimages.dicom_jpg_file.origin_url }}" alt="" heigth="50%" width="50%">
+</div>
+
+{% endblock %}
