@@ -18,6 +18,7 @@ class MedimageLV(ListView):
 
 #--- ListView
 
+
 class BeforeLV(ListView):
     # model = Medimage.objects.filter(requesterID=1)
     # model = get_object_or_404(Medimage)
@@ -32,24 +33,27 @@ class BeforeLV(ListView):
         return Medimage.objects.filter(requesterID=self.kwargs['requesterID'])
 
 #--- ListView
+
+
 class AfterLV(ListView):
     model = Medimage
     template_name = 'mapping/medimage_after.html'
     context_object_name = 'medimages'
     paginate_by = 5
 
+
 class PostCreateView(CreateView):
     model = Medimage
     template_name = 'mapping/medimage_form.html'
     fields = ['requesterID',
-    'emr_file', 'dicom_jpg_file', 'pacs_file',
-    'progress',
-    'examination_name', 'examination_type',
-    'examination_site', 'examination_regnum',
-    'patient_id']
+              'emr_file', 'dicom_jpg_file', 'pacs_file',
+              'progress',
+              'examination_name', 'examination_type',
+              'examination_site', 'examination_regnum',
+              'patient_id']
     # initial = {'slug': 'auto-filling-by-title'}
     success_url = reverse_lazy('mapping:index')
 
-    def form_valid(self, form): # self.request
+    def form_valid(self, form):  # self.request
         form.instance.owner = self.request.user
         return super(PostCreateView, self).form_valid(form)
