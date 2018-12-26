@@ -6,9 +6,6 @@
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
         crossorigin="anonymous"></script>
     <script>
-        // $(document).load(function () {
-        //     console.log("good");
-        // });
         $(document).ready(function () {
             function isEmpty(el) {
                 return !$.trim(el.html())
@@ -20,20 +17,28 @@
                     console.log("no");
                 }
             }, 1000);
+
+            $("#detail_link").on('click',function(event){
+                event.preventDefault();
+                top.document.location.href = $("#detail_link").attr("href");
+            });
         });
     </script>
 </head>
 
 <body>
     {% for medimage in medimages %}
-    <div style="display:inline-block">
-        <div><img src="{{ medimage.dicom_jpg_file.thumb_url }}" alt="not"></div>
-        <div>{{ medimage.requesterID }}</div>
-        <div id="time">{{ medimage.request_time }}</div>
-        <div>{{ medimage.dicom_jpg_file }}</div>
-        <div>{{ medimage.progress }}</div>
-        <div>{{ medimage.patient_id }}</div>
-    </div>
+    <a href="{{ medimage.get_absolute_url }}" id="detail_link">
+        <div style="display:inline-block" id="thumbnail_view">
+            <div><img src="{{ medimage.dicom_jpg_file.thumb_url }}" alt="not"></div>
+            <div>{{ medimage.requesterID }}</div>
+            <div id="time">{{ medimage.request_time }}</div>
+            <div>{{ medimage.dicom_jpg_file }}</div>
+            <div>{{ medimage.progress }}</div>
+            <div>{{ medimage.patient_id }}</div>
+            <div>{{ medimage.pk }}</div>
+        </div>
+    </a>
 
     {% endfor %}
 </body>

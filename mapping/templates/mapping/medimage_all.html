@@ -15,22 +15,15 @@
     });
 </script>
 
-<div id="uploadBtn">업로드</div>
-
+<div style="background-color: aquamarine;" id="uploadBtn">업로드</div>
+<br>
 <div>
-    1
-    <object style="background-color: aquamarine;" width="1000" height="400" data="{% url 'mapping:medimage_before1' 1 %}"
+    <object style="background-color: aquamarine;" width="1000" height="410" data="{% url 'mapping:medimage_before' 1 %}"
         type="text/html"></object>
 </div>
-
+<br>
 <div>
-    2
-    <object style="background-color: aquamarine;" width="1000" height="400" data="{% url 'mapping:medimage_before2' 1 %}"
-        type="text/html"></object>
-</div>
-
-<div>
-    <object style="background-color: aquamarine;" width="1000" height="400" data="{% url 'mapping:medimage_after' %}"
+    <object style="background-color: aquamarine;" width="1000" height="410" data="{% url 'mapping:medimage_after' 1 %}"
         type="text/html"></object>
 </div>
 

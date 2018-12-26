@@ -20,17 +20,12 @@ class MedimageLV(ListView):
 
 
 class BeforeLV(ListView):
-    # model = Medimage.objects.filter(requesterID=1)
-    # model = get_object_or_404(Medimage)
-    # model = Medimage.objects.order_by('requesterID')
-    # model = get_object_or_404(Medimage, pk=1)
-    # model = Medimage
     template_name = 'mapping/medimage_before.html'
     context_object_name = 'medimages'
-    paginate_by = 5
+    paginate_by = 3
 
     def get_queryset(self, *args, **kwargs):
-        return Medimage.objects.filter(requesterID=self.kwargs['requesterID'])
+        return Medimage.objects.filter(requesterID=self.kwargs['requesterID'], progress=0)
 
 #--- ListView
 
@@ -39,8 +34,10 @@ class AfterLV(ListView):
     model = Medimage
     template_name = 'mapping/medimage_after.html'
     context_object_name = 'medimages'
-    paginate_by = 5
+    paginate_by = 3
 
+    def get_queryset(self, *args, **kwargs):
+        return Medimage.objects.filter(requesterID=self.kwargs['requesterID'], progress=1)
 
 class PostCreateView(CreateView):
     model = Medimage
@@ -57,3 +54,8 @@ class PostCreateView(CreateView):
     def form_valid(self, form):  # self.request
         form.instance.owner = self.request.user
         return super(PostCreateView, self).form_valid(form)
+
+class MedimageDV(DetailView):
+    model = Medimage
+    template_name = 'mapping/medimage_detail.html'
+    context_object_name = 'medimages'
