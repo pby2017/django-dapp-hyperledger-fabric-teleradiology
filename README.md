@@ -1,16 +1,16 @@
 # 2018-2-myMIMS
 
 [install library - pip install]
-Django
-Pillow
-mysqlclient
-pytz
+1. Django
+2. pytz
+3. Pillow
+4. mysqlclient
 
 [install software]
-git (https://git-scm.com/)
-VScode (https://code.visualstudio.com/)
-Mysql (https://dev.mysql.com/downloads/windows/installer/8.0.html)
-sourcetree (https://www.sourcetreeapp.com/)
+1. git (https://git-scm.com/)
+2. VScode (https://code.visualstudio.com/)
+3. Mysql (https://dev.mysql.com/downloads/windows/installer/8.0.html)
+4. sourcetree (https://www.sourcetreeapp.com/)
 
 [process]
 1. start project name myMIMS
