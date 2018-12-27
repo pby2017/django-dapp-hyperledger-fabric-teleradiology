@@ -24,6 +24,7 @@ SECRET_KEY = 'ruep21=fff&hbi7+0bce3p_7&z^(dhwp_-ho*73=03vm(=5g&o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
 ALLOWED_HOSTS = []
 

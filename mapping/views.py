@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, get_list_or_404, render
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView
@@ -7,17 +7,15 @@ from django.urls import reverse, reverse_lazy
 
 from mapping.models import *
 
+import requests, json
+
 #--- ListView
 
 
 class MedimageLV(ListView):
-    # model = get_list_or_404(Medimage,)
     model = Medimage
     template_name = 'mapping/medimage_all.html'
     context_object_name = 'medimages'
-
-#--- ListView
-
 
 class BeforeLV(ListView):
     template_name = 'mapping/medimage_before.html'
@@ -26,9 +24,6 @@ class BeforeLV(ListView):
 
     def get_queryset(self, *args, **kwargs):
         return Medimage.objects.filter(requesterID=self.kwargs['requesterID'], progress=0)
-
-#--- ListView
-
 
 class AfterLV(ListView):
     model = Medimage
@@ -59,3 +54,40 @@ class MedimageDV(DetailView):
     model = Medimage
     template_name = 'mapping/medimage_detail.html'
     context_object_name = 'medimages'
+
+    def render_to_response(self, context, **response_kwargs):
+        context = {}
+        medimage = None
+        medimage_pk = self.kwargs['pk']
+
+        try:
+            medimage = Medimage.objects.get(pk=medimage_pk)
+        except Medimage.DoesNotExist:
+            print('objects.get DoesNotExist')
+        except:
+            print('objects.get except')
+
+        try:
+            url = "http://59.29.224.87:8000/get_tuna/"+str(medimage_pk)
+            result = requests.get(url)
+            context['medimage_opinion'] = json.loads(result.text)['opinion']
+            context['medimages'] = medimage
+            print(json.loads(requests.get(url).text)['opinion'])
+        except ConnectionError:
+            context['medimage_opinion'] = "서버 연결 실패"
+            context['medimages'] = medimage
+        except ValueError:
+            print('ValueError')
+            context['medimage_opinion'] = "현재 소견 없음"
+            context['medimages'] = medimage
+        except:
+            print('other except')
+            context['medimage_opinion'] = "서버 연결 실패"
+            context['medimages'] = medimage
+
+        return self.response_class(
+        request = self.request,
+        template = self.get_template_names(),
+        context = context,
+        **response_kwargs
+        )

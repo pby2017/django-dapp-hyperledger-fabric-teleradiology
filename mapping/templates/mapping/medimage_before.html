@@ -7,20 +7,10 @@
         crossorigin="anonymous"></script>
     <script>
         $(document).ready(function () {
-            function isEmpty(el) {
-                return !$.trim(el.html())
-            }
-            setInterval(function () {
-                if (!isEmpty($("#time"))) {
-                    console.log($("#time"));
-                } else {
-                    console.log("no");
-                }
-            }, 1000);
-
-            $("#detail_link").on('click',function(event){
+            $('.thumbnail_view').on('click', function (event) {
                 event.preventDefault();
-                top.document.location.href = $("#detail_link").attr("href");
+                console.log($(this).attr('id'));
+                top.document.location.href = $(this).attr('id');
             });
         });
     </script>
@@ -28,19 +18,29 @@
 
 <body>
     {% for medimage in medimages %}
-    <a href="{{ medimage.get_absolute_url }}" id="detail_link">
-        <div style="display:inline-block" id="thumbnail_view">
-            <div><img src="{{ medimage.dicom_jpg_file.thumb_url }}" alt="not"></div>
-            <div>{{ medimage.requesterID }}</div>
-            <div id="time">{{ medimage.request_time }}</div>
-            <div>{{ medimage.dicom_jpg_file }}</div>
-            <div>{{ medimage.progress }}</div>
-            <div>{{ medimage.patient_id }}</div>
-            <div>{{ medimage.pk }}</div>
-        </div>
-    </a>
-
+    <div style="display:inline-block" id="{{ medimage.get_absolute_url }}" class="thumbnail_view">
+        <div><img src="{{ medimage.dicom_jpg_file.thumb_url }}" alt="not"></div>
+        <div>{{ medimage.requesterID }}</div>
+        <div id="time">{{ medimage.request_time }}</div>
+        <div>{{ medimage.dicom_jpg_file }}</div>
+        <div>{{ medimage.progress }}</div>
+        <div>{{ medimage.patient_id }}</div>
+    </div>
     {% endfor %}
+
+    <div>
+        <span>
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">이전페이지</a>
+            {% endif %}
+
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">다음페이지</a>
+            {% endif %}
+        </span>
+    </div>
 </body>
 
 </html>
