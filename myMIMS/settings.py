@@ -26,7 +26,7 @@ SECRET_KEY = 'ruep21=fff&hbi7+0bce3p_7&z^(dhwp_-ho*73=03vm(=5g&o'
 DEBUG = True
 # DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -137,3 +137,5 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+LOGIN_REDIRECT_URL = '/mapping/' # 로그인 후 이동할 url 설정

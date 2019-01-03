@@ -5,52 +5,71 @@ from django.views.generic.edit import CreateView
 
 from django.urls import reverse, reverse_lazy
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 from mapping.models import *
 
 import requests, json
 
-#--- ListView
+class MedimageLV(LoginRequiredMixin, ListView):
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
 
-
-class MedimageLV(ListView):
     model = Medimage
     template_name = 'mapping/medimage_all.html'
     context_object_name = 'medimages'
 
-class BeforeLV(ListView):
+class BeforeLV(LoginRequiredMixin, ListView):
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
+
     template_name = 'mapping/medimage_before.html'
     context_object_name = 'medimages'
-    paginate_by = 3
+    paginate_by = 7
 
     def get_queryset(self, *args, **kwargs):
-        return Medimage.objects.filter(requesterID=self.kwargs['requesterID'], progress=0)
+        return Medimage.objects.filter(requesterID=self.request.user.id, progress=0)
 
-class AfterLV(ListView):
+class AfterLV(LoginRequiredMixin, ListView):
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
+
     model = Medimage
     template_name = 'mapping/medimage_after.html'
     context_object_name = 'medimages'
-    paginate_by = 3
+    paginate_by = 7
 
     def get_queryset(self, *args, **kwargs):
-        return Medimage.objects.filter(requesterID=self.kwargs['requesterID'], progress=1)
+        return Medimage.objects.filter(requesterID=self.request.user.id, progress=1)
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
+
     model = Medimage
     template_name = 'mapping/medimage_form.html'
-    fields = ['requesterID',
-              'emr_file', 'dicom_jpg_file', 'pacs_file',
+    fields = ['emr_file', 'dicom_jpg_file', 'pacs_file',
               'progress',
               'examination_name', 'examination_type',
               'examination_site', 'examination_regnum',
               'patient_id']
     # initial = {'slug': 'auto-filling-by-title'}
     success_url = reverse_lazy('mapping:index')
-
+    
     def form_valid(self, form):  # self.request
         form.instance.owner = self.request.user
+        form.instance.requesterID = self.request.user.id
         return super(PostCreateView, self).form_valid(form)
 
-class MedimageDV(DetailView):
+    def get_context_data(self, **kwargs):
+        context = super(PostCreateView, self).get_context_data(**kwargs)
+        context['userid'] = self.request.user.id
+        return context
+
+class MedimageDV(LoginRequiredMixin, DetailView):
+    login_url = '/accounts/login/'
+    redirect_field_name = 'redirect_to'
+
     model = Medimage
     template_name = 'mapping/medimage_detail.html'
     context_object_name = 'medimages'
@@ -68,7 +87,7 @@ class MedimageDV(DetailView):
             print('objects.get except')
 
         try:
-            url = "http://59.29.224.87:8000/get_tuna/"+str(medimage_pk)
+            url = "http://112.153.180.246:8000/get_tuna/"+str(medimage_pk)
             result = requests.get(url)
             context['medimage_opinion'] = json.loads(result.text)['opinion']
             context['medimages'] = medimage

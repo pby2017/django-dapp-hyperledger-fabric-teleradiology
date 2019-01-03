@@ -39,7 +39,7 @@
             $.ajax({
                 // contentType: "application/json; charset=UTF-8",
                 type: "POST", // 데이터를 전송하는 방법을 지정
-                url: "http://59.29.224.87:8000/add_opinion", // 통신할 url을 지정
+                url: "http://112.153.180.246:8000/add_opinion", // 통신할 url을 지정
                 data: JSON.stringify({ 'id': '{{ medimages.id }}', 'opinion': opinion, 'csrfmiddlewaretoken': '{{ csrf_token }}' }), // 서버로 데이터 전송시 옵션
                 dataType: "json",
                 success: function (response) { // 통신 성공시
