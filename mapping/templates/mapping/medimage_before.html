@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $('.thumbnail_view').on('click', function (event) {
+                event.preventDefault();
+                console.log($(this).attr('id'));
+                top.document.location.href = $(this).attr('id');
+            });
+        });
+    </script>
+</head>
+
+<body>
+    {% for medimage in medimages %}
+    <div style="display:inline-block" id="{{ medimage.get_absolute_url }}" class="thumbnail_view">
+        <div><img src="{{ medimage.dicom_jpg_file.thumb_url }}" alt="not"></div>
+        <div>{{ medimage.requesterID }}</div>
+        <div id="time">{{ medimage.request_time }}</div>
+        <div>{{ medimage.dicom_jpg_file }}</div>
+        <div>{{ medimage.progress }}</div>
+        <div>{{ medimage.patient_id }}</div>
+    </div>
+    {% endfor %}
+
+    <div>
+        <span>
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">이전페이지</a>
+            {% endif %}
+
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">다음페이지</a>
+            {% endif %}
+        </span>
+    </div>
+</body>
+
+</html>

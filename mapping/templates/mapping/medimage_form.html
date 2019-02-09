@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Medimage 생성 페이지{% endblock %}
+
+{% load staticfiles %}
+{% block extrastyle %}{% static "css/forms.css" %}{% endblock %}
+
+{% block content %}
+<h1>Medimage Create/Update - {{ medimage }} </h1>
+    <form action="." method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% if form.errors %}
+            {{ form.errors }}
+        {% endif %}
+
+        <p>등록(수정)하고 싶은 Medimage를 작성해 주세요.</p>
+        <fieldset class="aligned">
+            <div class="form-row">
+                {{form.emr_file.label_tag}} {{form.emr_file}}
+            </div>
+            <div class="form-row">
+                {{form.dicom_jpg_file.label_tag}} {{form.dicom_jpg_file}}
+            </div>
+            <div class="form-row">
+                {{form.pacs_file.label_tag}} {{form.pacs_file}}
+            </div>
+            <div class="form-row">
+                {{form.progress.label_tag}} {{form.progress}}
+            </div>
+            <div class="form-row">
+                {{form.examination_name.label_tag}} {{form.examination_name}}
+            </div>
+            <div class="form-row">
+                {{form.examination_type.label_tag}} {{form.examination_type}}
+            </div>
+            <div class="form-row">
+                {{form.examination_site.label_tag}} {{form.examination_site}}
+            </div>
+            <div class="form-row">
+                {{form.examination_regnum.label_tag}} {{form.examination_regnum}}
+            </div>
+            <div class="form-row">
+                {{form.patient_id.label_tag}} {{form.patient_id}}
+            </div>
+        </fieldset>
+        <div class="submit-row">
+            <input type="submit" value="등록" />
+        </div>
+    </form>
+{% endblock %}
