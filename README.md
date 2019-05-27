@@ -28,17 +28,17 @@
 [개발환경]
 1. python 3.6.5
 
-[install library - pip install]
-1. Django                   2.1.3
-2. django-unixdatetimefield 0.1.6
-3. lazy-object-proxy        1.3.1
-4. mysql-connector-python   8.0.13 (Mysql을 설치할 때 설치 선택옵션이다, pip로 따로 설치해도 된다)
-5. mysqlclient              1.3.14
-6. Pillow                   5.3.0
-7. pytz                     2018.7
-8. requests                 2.21.0
+[install library - pip install]  
+1. Django                   2.1.3  
+2. django-unixdatetimefield 0.1.6  
+3. lazy-object-proxy        1.3.1  
+4. mysql-connector-python   8.0.13 (Mysql을 설치할 때 설치 선택옵션이다, pip로 따로 설치해도 된다)  
+5. mysqlclient              1.3.14  
+6. Pillow                   5.3.0  
+7. pytz                     2018.7  
+8. requests                 2.21.0  
 
-이외 기타(자동으로 설치되거나 오류해결할 때 설치함) 
+이외 기타(자동으로 설치되거나 오류해결할 때 설치함)  
 astroid                  2.0.4  
 autopep8                 1.4.3  
 certifi                  2018.11  
