@@ -38,23 +38,23 @@
 7. pytz                     2018.7
 8. requests                 2.21.0
 
-이외 기타(자동으로 설치되거나 오류해결할 때 설치함)
-astroid                  2.0.4
-autopep8                 1.4.3
-certifi                  2018.11
-chardet                  3.0.4
-colorama                 0.4.0
-idna                     2.8
-isort                    4.3.4
-mccabe                   0.6.1
-pip                      18.1
-pycodestyle              2.4.0
-pylint                   2.1.1
-setuptools               39.0.1
-six                      1.11.0
-typed-ast                1.1.0
-urllib3                  1.24.1
-wrapt                    1.10.11
+이외 기타(자동으로 설치되거나 오류해결할 때 설치함) 
+astroid                  2.0.4  
+autopep8                 1.4.3  
+certifi                  2018.11  
+chardet                  3.0.4  
+colorama                 0.4.0  
+idna                     2.8  
+isort                    4.3.4  
+mccabe                   0.6.1  
+pip                      18.1  
+pycodestyle              2.4.0  
+pylint                   2.1.1  
+setuptools               39.0.1  
+six                      1.11.0  
+typed-ast                1.1.0  
+urllib3                  1.24.1  
+wrapt                    1.10.11  
 
 [install software]
 1. git (https://git-scm.com/)
