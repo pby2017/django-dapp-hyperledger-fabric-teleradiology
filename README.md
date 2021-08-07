@@ -70,3 +70,7 @@ wrapt                    1.10.11
 5. add image detail page in mapping django app
 6. connect image detail page and hyperledger fabric
 7. change database sqlite3 to mysql
+
+[virtualbox ubuntu id/pw]
+id : bcadmin
+pw : 1q2w3e4r
