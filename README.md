@@ -72,5 +72,5 @@ wrapt                    1.10.11
 7. change database sqlite3 to mysql
 
 [virtualbox ubuntu id/pw]
-id : bcadmin
-pw : 1q2w3e4r
+* id : bcadmin
+* pw : 1q2w3e4r
